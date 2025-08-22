@@ -25,8 +25,12 @@ SECRET_KEY = 'django-insecure-dp^1@5f#2%0v$ks6oue5n!slun$zgk*!q^_e7f(15$=!344y23
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["instagram-4j0i.onrender.com", "localhost", "127.0.0.1", "*"]
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "instagram-4j0i.onrender.com"
+]
+
 
 
 # Application definition
