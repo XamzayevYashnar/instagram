@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Story qo‘shish{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 rounded-4 p-4" style="max-width: 500px; margin: auto;">
+    <h4 class="mb-4 text-center">📷 Story qo‘shish</h4>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label class="form-label">Rasm yoki Video tanlang</label>
+            <input type="file" name="media" accept="image/*,video/*" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Matn (ixtiyoriy)</label>
+            <textarea name="caption" class="form-control" rows="3" placeholder="Matn yozing..."></textarea>
+        </div>
+        
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Qo‘shish</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

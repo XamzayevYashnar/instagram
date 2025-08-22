@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+    <h3 class="mb-4 text-center">➕ Yangi post qo‘shish</h3>
+
+    <form method="POST" enctype="multipart/form-data" class="p-4 shadow-sm rounded-4 border bg-white">
+        {% csrf_token %}
+
+        <!-- Title -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Sarlavha</label>
+            <input type="text" name="title" id="title" class="form-control" placeholder="Masalan: Tabassumli kun" required>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-3">
+            <label for="image" class="form-label">Rasm yuklash (ixtiyoriy)</label>
+            <input type="file" name="image" id="image" accept="image/*" class="form-control">
+        </div>
+
+        <!-- Video -->
+        <div class="mb-3">
+            <label for="videos" class="form-label">Video yuklash (ixtiyoriy)</label>
+            <input type="file" name="videos" id="videos" accept="video/*" class="form-control">
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+            <label for="location" class="form-label">Joylashuv (ixtiyoriy)</label>
+            <input type="text" name="location" id="location" class="form-control" placeholder="Masalan: Toshkent, Uchtepa">
+        </div>
+
+        <!-- Submit button -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">📤 Postni joylash</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

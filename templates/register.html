@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Ro‘yxatdan o‘tish{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-sm p-4" style="width: 100%; max-width: 450px;">
+        <h4 class="text-center mb-4">Ro‘yxatdan o‘tish</h4>
+
+        <!-- Xatoliklar -->
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-danger">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Foydalanuvchi nomi</label>
+                <input type="text" name="username" id="id_username" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" name="email" id="id_email" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_phone" class="form-label">Telefon raqam</label>
+                <input type="text" name="phone_number" id="id_phone" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Parol</label>
+                <input type="password" name="password1" id="id_password1" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Parolni tasdiqlang</label>
+                <input type="password" name="password2" id="id_password2" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_avatar" class="form-label">Profil rasmi (ixtiyoriy)</label>
+                <input type="file" name="avatar" id="id_avatar" class="form-control" accept="image/*">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Ro‘yxatdan o‘tish</button>
+        </form>
+
+        <p class="mt-3 text-center">
+            Allaqachon ro‘yxatdan o‘tganmisiz? <a href="{% url 'login' %}">Kirish</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

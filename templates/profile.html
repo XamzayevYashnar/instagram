@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+    <div class="card shadow-sm border-0 rounded-4 p-4" style="background: linear-gradient(to right, #fdfbfb, #ebedee);">
+        
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            
+            <!-- Avatar + ism/email -->
+            <div class="d-flex align-items-center">
+                <img src="{{ user_profile.avatar.url }}" alt="Avatar"
+                     class="rounded-circle shadow" width="80" height="80"
+                     style="object-fit: cover; border: 3px solid #dee2e6;">
+                
+                <div class="ms-4">
+                    <h4 class="mb-0">{{ user_profile.username }}</h4>
+                    {% if user_profile.email %}
+                        <small class="text-muted">{{ user_profile.email }}</small>
+                    {% endif %}
+                </div>
+
+                {% if request.user == user_profile %}
+                <!-- Story tugmasi -->
+                <a href="{% url 'add_story' %}" 
+                   class="btn btn-outline-primary ms-3 shadow-sm px-3 py-1"
+                   style="border-radius: 8px; font-weight: 500; text-decoration: none;">
+                    <i class="bi bi-plus-lg me-1"></i> Add Story
+                </a>
+                {% endif %}
+            </div>
+
+            <!-- Follow / Unfollow tugmalari -->
+            {% if request.user != user_profile %}
+                {% if follow %}
+                    <a href="{% url 'following_add' user_profile.id %}" 
+                       class="btn btn-outline-danger px-4 py-2 rounded-pill shadow-sm"
+                       style="border: 2px solid #ff4d4d; text-decoration: none;">
+                        <i class="bi bi-person-dash-fill me-1"></i> Unfollow
+                    </a>
+                {% else %}
+                    <a href="{% url 'following_add' user_profile.id %}" 
+                       class="btn btn-primary px-4 py-2 rounded-pill shadow-sm"
+                       style="background: linear-gradient(45deg, #4facfe, #00f2fe); border: none; text-decoration: none;">
+                        <i class="bi bi-person-plus-fill me-1"></i> Follow
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <!-- Followers / Following / My Videos -->
+        <div class="d-flex mt-3 text-center">
+            <a href="{% url 'followers_list' user_profile.id %}" 
+               class="flex-fill text-decoration-none text-dark">
+                <div class="fw-bold fs-5">{{ followers_count }}</div>
+                <div class="text-muted small">Followers</div>
+            </a>
+            <a href="{% url 'following_list' user_profile.id %}" 
+               class="flex-fill text-decoration-none text-dark">
+                <div class="fw-bold fs-5">{{ following_count }}</div>
+                <div class="text-muted small">Following</div>
+            </a>
+            <a href="{% url 'my_videos' user_profile.id %}" 
+               class="flex-fill text-decoration-none text-dark">
+                <div class="fw-bold fs-5"><i class="bi bi-camera-video-fill"></i></div>
+                <div class="text-muted small">My Videos</div>
+            </a>
+        </div>
+
+        <hr>
+
+        <!-- Qo'shimcha ma'lumotlar -->
+        <div class="row">
+            {% if user_profile.first_name %}
+                <div class="col-6 mb-2">
+                    <strong>Ism:</strong><br>
+                    {{ user_profile.first_name }}
+                </div>
+            {% endif %}
+            {% if user_profile.last_name %}
+                <div class="col-6 mb-2">
+                    <strong>Familiya:</strong><br>
+                    {{ user_profile.last_name }}
+                </div>
+            {% endif %}
+            <div class="col-12 mt-3">
+                <strong>Telefon raqami:</strong><br>
+                {{ user_profile.phone_number }}
+            </div>
+            {% if user_profile.email %}
+                <div class="col-12 mt-3">
+                    <strong>Email:</strong><br>
+                    {{ user_profile.email }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Story ro'yxati -->
+    <div class="mt-4">
+        <h5 class="mb-3">Story'lar</h5>
+        {% if stories %}
+            <div class="list-group shadow-sm rounded-3">
+                {% for story in stories %}
+                    <a href="{% url 'view_story' story.id %}" 
+                       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        {{ story.caption|default:"Story" }}
+                        <small class="text-muted">{{ story.created_at|timesince }} oldin</small>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Story yo‘q yoki hammasini ko‘rib bo‘ldingiz</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.flex-fill:hover .fw-bold,
+.flex-fill:hover .text-muted {
+    color: #007bff !important;
+}
+</style>
+{% endblock %}

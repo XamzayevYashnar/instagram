@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ user_profile.username }} ni kuzatayotganlar</h2>
+    <div class="list-group mt-3">
+        {% if followers %}
+            {% for follow in followers %}
+                <div class="list-group-item d-flex align-items-center">
+                    <img src="{{ follow.fanat.avatar.url }}" 
+                         class="rounded-circle me-3" 
+                         width="50" height="50" alt="Avatar">
+                    <a href="{% url 'profile' follow.fanat.username %}">
+                        {{ follow.fanat.username }}
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted text-center">Hali sizni hech kim kuzatmayapti.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Following</h2>
+    {% if following_users %}
+        <ul class="list-group shadow-sm">
+            {% for follow in following_users %}
+                <li class="list-group-item d-flex align-items-center">
+                    <img src="{{ follow.kumir.avatar.url }}" alt="avatar" 
+                         class="rounded-circle me-3" width="50" height="50">
+                    <a href="{% url 'profile' follow.kumir.username %}" 
+                       class="fw-bold text-decoration-none text-dark">
+                        {{ follow.kumir.username }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted text-center">Siz hali hech kimni kuzatmayapsiz.</p>
+    {% endif %}
+</div>
+{% endblock %}

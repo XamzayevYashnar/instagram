@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4" style="max-width: 600px;">
+    <h4 class="mb-4">👍 Menga yoqqan postlar</h4>
+
+    {% for post in posts %}
+        <div class="card mb-4 shadow-sm border-0 rounded-4" 
+             style="background: linear-gradient(to bottom, #fff0f5, #fff9f0);">
+            
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top rounded-top-4" 
+                     alt="Post image" style="max-height: 400px; object-fit: cover;">
+            {% elif post.videos %}
+                <video controls class="card-img-top rounded-top-4"
+                       style="max-height: 400px; object-fit: cover;">
+                    <source src="{{ post.videos.url }}" type="video/mp4">
+                    Brauzeringiz videoni qo‘llab-quvvatlamaydi.
+                </video>
+            {% endif %}
+
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    {% if post.user.avatar %}
+                        <a href="{% url 'profile' post.user.username %}">
+                            <img src="{{ post.user.avatar.url }}" 
+                                 class="rounded-circle me-2 shadow-sm" 
+                                 width="40" height="40" alt="Avatar">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'profile' post.user.username %}">
+                            <img src="{% static 'img/default-avatar.png' %}" 
+                                 class="rounded-circle me-2 shadow-sm" 
+                                 width="40" height="40" alt="Avatar">
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'profile' post.user.username %}">
+                        <strong style="color: #333;">{{ post.user.username }}</strong>
+                    </a>
+                    <span class="text-muted ms-auto" style="font-size: 12px;">
+                        {{ post.created_at|date:"M d, H:i" }}
+                    </span>
+                </div>
+
+                {% if post.title %}
+                    <p class="mb-2" style="font-weight: 600; color: #444;">
+                        {{ post.title }}
+                    </p>
+                {% endif %}
+                {% if post.location %}
+                    <p class="text-muted mb-2" style="font-size: 13px;">
+                        📍 {{ post.location }}
+                    </p>
+                {% endif %}
+
+                <form method="post" action="{% url 'like_post' post.id %}">
+                    {% csrf_token %}
+                    {% if post.is_liked %}
+                        <button type="submit" 
+                                class="btn btn-sm px-3 py-1 rounded-pill shadow-sm"
+                                style="background: linear-gradient(135deg, #ff6b6b, #ffb3b3);
+                                       color: white; font-weight: 600; border: none;
+                                       transition: 0.3s;">
+                            ❤️ Unlike
+                        </button>
+                    {% else %}
+                        <button type="submit" 
+                                class="btn btn-sm px-3 py-1 rounded-pill shadow-sm"
+                                style="background: linear-gradient(135deg, #6ba8ff, #b3d9ff);
+                                       color: white; font-weight: 600; border: none;
+                                       transition: 0.3s;">
+                            🤍 Like
+                        </button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-center text-muted">Hozircha hech qanday post mavjud emas.</p>
+    {% endfor %}
+</div>
+
+<style>
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+}
+</style>
+{% endblock %}
