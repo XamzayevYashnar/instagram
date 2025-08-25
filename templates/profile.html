@@ -27,6 +27,13 @@
                    style="border-radius: 8px; font-weight: 500; text-decoration: none;">
                     <i class="bi bi-plus-lg me-1"></i> Add Story
                 </a>
+
+                <!-- Tahrirlash tugmasi -->
+                <a href="{% url 'edit_profile' user_profile.id %}" 
+                   class="btn btn-warning ms-2 shadow-sm px-3 py-1"
+                   style="border-radius: 8px; font-weight: 500; text-decoration: none;">
+                    <i class="bi bi-pencil-square me-1"></i> Tahrirlash
+                </a>
                 {% endif %}
             </div>
 

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Exists, OuterRef
+from django.contrib import messages
 
 
 # 🏠 Home
@@ -66,8 +67,8 @@ def add_post(request):
 
 # 👤 Profil
 @login_required
-def profile_view(request, username):
-    user_profile = get_object_or_404(CustomUser, username=username)
+def profile_view(request, user_id):
+    user_profile = get_object_or_404(CustomUser, id=user_id)
     user_posts = Post.objects.filter(user=user_profile)
 
     followers_count = Follower.objects.filter(kumir=user_profile).count()
@@ -179,3 +180,21 @@ def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id, user=request.user)
     post.delete()
     return redirect('my_videos', id=request.user.id)
+
+@login_required
+def edit_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+
+    if request.method == "POST":
+        user.username = request.POST.get("username")
+        user.email = request.POST.get("email")
+        user.phone_number = request.POST.get("phone_number")
+
+        avatar = request.FILES.get("avatar")
+        if avatar:
+            user.avatar = avatar
+
+        user.save()
+        return redirect("profile", request.user.id) 
+
+    return render(request, "edit_profile.html", {"user": user})

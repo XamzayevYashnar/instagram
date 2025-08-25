@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Profilni tahrirlash{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+    <div class="card shadow-sm border-0 rounded-4 p-4">
+        <h3 class="mb-4">Profilni tahrirlash</h3>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Avatar -->
+            <div class="mb-3 text-center">
+                <img src="{{ user.avatar.url }}" 
+                     class="rounded-circle shadow mb-2"
+                     width="120" height="120"
+                     style="object-fit: cover; border: 3px solid #dee2e6;">
+                <input type="file" name="avatar" class="form-control mt-2">
+            </div>
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" id="username"
+                       class="form-control"
+                       value="{{ user.username }}">
+            </div>
+
+            <!-- Telefon -->
+            <div class="mb-3">
+                <label for="phone_number" class="form-label">Telefon raqam</label>
+                <input type="text" name="phone_number" id="phone_number"
+                       class="form-control"
+                       value="{{ user.phone_number }}">
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email"
+                       class="form-control"
+                       value="{{ user.email }}">
+            </div>
+
+            <!-- Saqlash tugmasi -->
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'profile' user.id %}" class="btn btn-secondary">Bekor qilish</a>
+                <button type="submit" class="btn btn-success">Saqlash</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
