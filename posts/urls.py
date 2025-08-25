@@ -11,7 +11,7 @@ urlpatterns = [
     path('like_view/', like_view, name='likes'),
     path('add_post/', add_post, name='add'),
 
-    path('profile/<str:user_id>/', profile_view, name='profile'),
+    path('profile/<int:user_id>/', profile_view, name='profile'),
 
     path('add_comment/<int:id>/', add_comment, name='add_comment'),
     path('followers/<int:user_id>/', followers_list, name='followers_list'),
