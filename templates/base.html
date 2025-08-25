@@ -103,7 +103,7 @@
             {% if user.is_authenticated %}
                 <a class="btn btn-outline-primary" href="{% url 'likes' %}">❤️ Likes</a>
                 <a class="btn btn-outline-danger" href="{% url 'add' %}">➕ Post</a>
-                <a class="btn btn-outline-primary" href="{% url 'profile' user.username %}">👤 Profil</a>
+                <a class="btn btn-outline-primary" href="{% url 'profile' user.id %}">👤 Profil</a>
                 <a class="btn btn-outline-danger" href="{% url 'logout' %}">🚪 Chiqish</a>
             {% else %}
                 <a class="btn btn-outline-success" href="{% url 'login' %}">🔑 Kirish</a>
