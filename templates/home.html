@@ -94,7 +94,7 @@
 
             <div class="card-body">
                 <!-- Profilga o'tish -->
-                <a href="{% url 'profile' post.user.username %}" class="d-flex align-items-center mb-3 text-decoration-none text-dark">
+                <a href="{% url 'profile' post.user.id %}" class="d-flex align-items-center mb-3 text-decoration-none text-dark">
                     <img src="{% if post.user.avatar %}{{ post.user.avatar.url }}{% else %}{% static 'img/default-avatar.png' %}{% endif %}"
                          class="rounded-circle me-2 shadow-sm"
                          width="40" height="40" alt="Avatar"
